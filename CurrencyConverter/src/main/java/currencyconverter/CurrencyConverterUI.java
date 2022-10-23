@@ -18,23 +18,41 @@ public class CurrencyConverterUI extends JFrame {
     private JButton convertButton;
     private String convertingValue;
     private JTextArea printConversionLabel;
+    private Double convertedValue;
 
     public CurrencyConverterUI(){
         convertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(fromCurrencyCB.getItemAt(getIndexFromSelectedFromCurrencyCB()));
-                System.out.println(toCurrencyCB.getItemAt((getIndexFromSelectedToCurrencyCB())));
+                CurrencyConverterAPI api=new CurrencyConverterAPI();
+
+                int indexFromItemSelectedInFromCurrencyCB=getIndexFromSelectedFromCurrencyCB();
+                int indexFromItemSelectedInToCurrencyCB=getIndexFromSelectedToCurrencyCB();
+
+                System.out.println(fromCurrencyCB.getItemAt(indexFromItemSelectedInFromCurrencyCB));
+                System.out.println(toCurrencyCB.getItemAt(indexFromItemSelectedInToCurrencyCB));
                 convertingValue=insertValueToConvert.getText();
                 Double value=0.0;
+                convertedValue=0.0;
                 try {
                     value=Double.parseDouble(convertingValue);
+                    if(value>=0) {
+                        try {
+                            System.out.println(api.getConversion(fromCurrencyCB.getItemAt(indexFromItemSelectedInFromCurrencyCB).toString(),
+                                    toCurrencyCB.getItemAt(indexFromItemSelectedInToCurrencyCB).toString(), convertingValue));
+                            convertedValue=api.getConversion(fromCurrencyCB.getItemAt(indexFromItemSelectedInFromCurrencyCB).toString(),
+                                    toCurrencyCB.getItemAt(indexFromItemSelectedInToCurrencyCB).toString(), convertingValue);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(moneyConverterJPanel, "Value can't be converted");
+                        }
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(moneyConverterJPanel, "Value should be positive");
+                    }
                 } catch (NumberFormatException ex) {
-                   JOptionPane.showMessageDialog(moneyConverterJPanel, "Please read a number");
+                   JOptionPane.showMessageDialog(moneyConverterJPanel, "Please read a valid number");
                 }
-                System.out.println(value);
                 printConversionLabel.setText(value+ " " + toCurrencyCB.getItemAt(getIndexFromSelectedToCurrencyCB()));
-
             }
         });
     }
