@@ -27,22 +27,22 @@ public class CurrencyConverterUI extends JFrame {
         setResizable(true);
 
         moneyConverterJPanel.setLayout(null);
-        ImageIcon background=new ImageIcon("src\\main\\java\\currencyconverter\\background.JPG");
-        Image img=background.getImage();
-        Image temp=img.getScaledInstance(700, 500, Image.SCALE_SMOOTH);
-        background=new ImageIcon(temp);
-        JLabel back=new JLabel(background);
-        back.setLayout(null);
-        back.setBounds(0, 0, 700, 500);
-        moneyConverterJPanel.add(back);
 
         JComboBox fromCurrencyCB;
         JComboBox toCurrencyCB;
+        JTextArea insertValueToConvert;
+        JButton convertButton;
+
         //=new JComboBox();
         fromCurrencyCB=generateComboBoxWithIcons();
         toCurrencyCB=generateComboBoxWithIcons();
+        insertValueToConvert=new JTextArea(1, 20);
+        convertButton=new JButton("Convert Button");
+
         moneyConverterJPanel.add(fromCurrencyCB);
         moneyConverterJPanel.add(toCurrencyCB);
+        moneyConverterJPanel.add(insertValueToConvert);
+        moneyConverterJPanel.add(convertButton);
 
         Insets insets=moneyConverterJPanel.getInsets();
         Dimension size=fromCurrencyComboBox.getPreferredSize();
@@ -54,11 +54,17 @@ public class CurrencyConverterUI extends JFrame {
 
         size=fromCurrencyCB.getPreferredSize();
         fromCurrencyCB.setBounds(100+insets.left, 150+insets.top, size.width, size.height);
-        fromCurrencyCB.setVisible(true);
+        //fromCurrencyCB.setVisible(true);
 
         size=toCurrencyCB.getPreferredSize();
         toCurrencyCB.setBounds(300+insets.left, 150+insets.top, size.width, size.height);
-        toCurrencyCB.setVisible(true);
+        //toCurrencyCB.setVisible(true);
+
+        size=insertValueToConvert.getPreferredSize();
+        insertValueToConvert.setBounds(400+insets.left, 150+insets.top, size.width, size.height);
+
+        size=convertButton.getPreferredSize();
+        convertButton.setBounds(300+insets.left, 300+insets.top, size.width, size.height);
     }
 
     public JComboBox generateComboBoxWithIcons()
