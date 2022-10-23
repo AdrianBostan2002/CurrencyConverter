@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +12,31 @@ public class CurrencyConverterUI extends JFrame {
     private JPanel moneyConverterJPanel;
     private JComboBox fromCurrencyComboBox;
     private JComboBox toCurrencyComboBox;
+    private JComboBox fromCurrencyCB;
+    private JComboBox toCurrencyCB;
+    private JTextArea insertValueToConvert;
+    private JButton convertButton;
+    private String convertingValue;
+    private JTextArea printConversionLabel;
 
     public CurrencyConverterUI(){
+        convertButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(fromCurrencyCB.getItemAt(getIndexFromSelectedFromCurrencyCB()));
+                System.out.println(toCurrencyCB.getItemAt((getIndexFromSelectedToCurrencyCB())));
+                convertingValue=insertValueToConvert.getText();
+                Double value=0.0;
+                try {
+                    value=Double.parseDouble(convertingValue);
+                } catch (NumberFormatException ex) {
+                   JOptionPane.showMessageDialog(moneyConverterJPanel, "Please read a number");
+                }
+                System.out.println(value);
+                printConversionLabel.setText(value+ " " + toCurrencyCB.getItemAt(getIndexFromSelectedToCurrencyCB()));
+
+            }
+        });
     }
 
     public void MainFrame() {
@@ -28,21 +49,22 @@ public class CurrencyConverterUI extends JFrame {
 
         moneyConverterJPanel.setLayout(null);
 
-        JComboBox fromCurrencyCB;
-        JComboBox toCurrencyCB;
-        JTextArea insertValueToConvert;
-        JButton convertButton;
+
+//        JTextArea insertValueToConvert;
+//        JButton convertButton;
 
         //=new JComboBox();
         fromCurrencyCB=generateComboBoxWithIcons();
         toCurrencyCB=generateComboBoxWithIcons();
         insertValueToConvert=new JTextArea(1, 20);
-        convertButton=new JButton("Convert Button");
+        printConversionLabel =new JTextArea(1, 50);
+        printConversionLabel.setEditable(false);
 
         moneyConverterJPanel.add(fromCurrencyCB);
         moneyConverterJPanel.add(toCurrencyCB);
         moneyConverterJPanel.add(insertValueToConvert);
         moneyConverterJPanel.add(convertButton);
+        moneyConverterJPanel.add(printConversionLabel);
 
         Insets insets=moneyConverterJPanel.getInsets();
         Dimension size=fromCurrencyComboBox.getPreferredSize();
@@ -65,6 +87,18 @@ public class CurrencyConverterUI extends JFrame {
 
         size=convertButton.getPreferredSize();
         convertButton.setBounds(300+insets.left, 300+insets.top, size.width, size.height);
+
+        size=printConversionLabel.getPreferredSize();
+        printConversionLabel.setBounds(150+insets.left, 350+insets.top, size.width, size.height);
+
+    }
+
+    public int getIndexFromSelectedToCurrencyCB(){
+        return toCurrencyCB.getSelectedIndex();
+    }
+
+    public int getIndexFromSelectedFromCurrencyCB(){
+        return fromCurrencyCB.getSelectedIndex();
     }
 
     public JComboBox generateComboBoxWithIcons()
