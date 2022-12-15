@@ -38,11 +38,12 @@ public class CurrencyConverterUI extends JFrame {
                     value=Double.parseDouble(convertingValue);
                     if(value>=0) {
                         try {
-                            System.out.println(api.getConversion(fromCurrencyCB.getItemAt(indexFromItemSelectedInFromCurrencyCB).toString(),
-                                    toCurrencyCB.getItemAt(indexFromItemSelectedInToCurrencyCB).toString(), convertingValue));
+                            //System.out.println(api.getConversion(fromCurrencyCB.getItemAt(indexFromItemSelectedInFromCurrencyCB).toString(),
+                              //      toCurrencyCB.getItemAt(indexFromItemSelectedInToCurrencyCB).toString(), convertingValue));
                             convertedValue=api.getConversion(fromCurrencyCB.getItemAt(indexFromItemSelectedInFromCurrencyCB).toString(),
                                     toCurrencyCB.getItemAt(indexFromItemSelectedInToCurrencyCB).toString(), convertingValue);
                         } catch (Exception e1) {
+                            e1.printStackTrace();
                             JOptionPane.showMessageDialog(moneyConverterJPanel, "Value can't be converted");
                         }
                     }
